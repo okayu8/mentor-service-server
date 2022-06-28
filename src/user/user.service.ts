@@ -19,4 +19,9 @@ export class UsersResolver {
   ) {
     return this.prisma.user.create({ data: { username, mail, password } });
   }
+
+  @Mutation(() => User)
+  async deleteUser(@Args('id') id: number) {
+    return this.prisma.user.delete({ where: { id } });
+  }
 }
