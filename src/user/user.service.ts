@@ -14,7 +14,7 @@ export class UsersResolver {
   @Mutation(() => User)
   async createUser(
     @Args('username') username: string,
-    @Args('displayName') mail: string,
+    @Args('mail') mail: string,
     @Args('password') password: string,
   ) {
     return this.prisma.user.create({ data: { username, mail, password } });

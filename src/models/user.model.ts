@@ -5,7 +5,8 @@ export class User {
   @Field(() => ID)
   id: number;
   username: string;
-  displayName: string;
+  mail: string;
+  password: string;
   createdAt: Date;
   updatedAt: Date;
 }
