@@ -18,11 +18,10 @@ model User {
   profile   Profile?
   threads   Thread[]
   comments  Comment[]
-  createdAt DateTime  @default(now())
-  updatedAt DateTime  @updatedAt
   followers Follows[] @relation("following")
   following Follows[] @relation("follower")
-  userId    Int?
+  createdAt DateTime  @default(now())
+  updatedAt DateTime  @updatedAt
 }
 
 model Profile {
@@ -35,38 +34,44 @@ model Profile {
 }
 
 model Follows {
-  follower    User @relation("follower", fields: [followerId], references: [id])
+  follower    User     @relation("follower", fields: [followerId], references: [id])
   followerId  Int
-  following   User @relation("following", fields: [followingId], references: [id])
+  following   User     @relation("following", fields: [followingId], references: [id])
   followingId Int
+  createdAt   DateTime @default(now())
+  updatedAt   DateTime @updatedAt
 
   @@id([followerId, followingId])
 }
 
 model Thread {
   id         Int       @id @default(autoincrement())
-  createdAt  DateTime  @default(now())
-  updatedAt  DateTime  @updatedAt
   title      String
   content    String
   published  Boolean   @default(false)
   author     User      @relation(fields: [authorId], references: [id])
   authorId   Int
-  categories Category  @relation(references: [id], fields: [categoryId])
+  categorie  Category  @relation(references: [id], fields: [categoryId])
   categoryId Int
   comments   Comment[]
+  createdAt  DateTime  @default(now())
+  updatedAt  DateTime  @updatedAt
 }
 
 model Comment {
-  id       Int    @id @default(autoincrement())
-  thread   Thread @relation(references: [id], fields: [threadId])
-  threadId Int
-  author   User   @relation(fields: [authorId], references: [id])
-  authorId Int
+  id        Int      @id @default(autoincrement())
+  thread    Thread   @relation(references: [id], fields: [threadId])
+  threadId  Int
+  author    User     @relation(fields: [authorId], references: [id])
+  authorId  Int
+  createdAt DateTime @default(now())
+  updatedAt DateTime @updatedAt
 }
 
 model Category {
-  id      Int      @id @default(autoincrement())
-  name    String
-  threads Thread[]
+  id        Int      @id @default(autoincrement())
+  name      String
+  threads   Thread[]
+  createdAt DateTime @default(now())
+  updatedAt DateTime @updatedAt
 }

@@ -1,17 +1,17 @@
 import { Args, Mutation, Query, Resolver } from '@nestjs/graphql';
-import { User } from 'src/models/user.model';
+import { UserModel } from 'src/models/user.model';
 import { PrismaService } from 'src/prisma.service';
 
-@Resolver(() => User)
+@Resolver(() => UserModel)
 export class UsersResolver {
   constructor(private prisma: PrismaService) {}
 
-  @Query(() => [User])
+  @Query(() => [UserModel])
   async users() {
     return this.prisma.user.findMany();
   }
 
-  @Mutation(() => User)
+  @Mutation(() => UserModel)
   async createUser(
     @Args('username') username: string,
     @Args('email') email: string,
@@ -20,7 +20,7 @@ export class UsersResolver {
     return this.prisma.user.create({ data: { username, email, password } });
   }
 
-  @Mutation(() => User)
+  @Mutation(() => UserModel)
   async deleteUser(@Args('id') id: number) {
     return this.prisma.user.delete({ where: { id } });
   }
